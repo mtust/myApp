@@ -5,13 +5,30 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+  <div class="container">
+    <h2>Find partner to share taxi ride</h2>
+    <div style="padding-left: 15px">
+      <div class="form-group row">
+        <input type="text" class="form-control" placeholder="search for location" autocorrect="off" autocapitalize="off"
+               spellcheck="off" type="text" class="form-control" #searchFrom [formControl]="searchControlFrom">
+      </div>
+      <div class="form-group row">
+        <input type="text" class="form-control" placeholder="search for location" autocorrect="off"
+               autocapitalize="off"
+               spellcheck="off" type="text" class="form-control" #searchTo [formControl]="searchControlTo">
+      </div>
+      <div class="row">
+        <button type="button" class="btn btn-default" (click)="findDirection()">Find direction</button>
+      </div>
+    </div>
+    <div style="padding-top: 10px;">
+      <agm-map [latitude]="latitudeFrom" [longitude]="longitudeFrom">
+        <agm-marker [latitude]="latitudeFrom" [longitude]="longitudeFrom"></agm-marker>
+        <agm-direction [origin]="origin" [destination]="destination">
+        </agm-direction>
+      </agm-map>
+    </div>
+
+  </div>
+
 </ion-content>

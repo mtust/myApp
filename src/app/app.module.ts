@@ -10,6 +10,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import {AgmCoreModule} from '@agm/core';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {AgmDirectionModule} from "agm-direction";
 
 @NgModule({
   declarations: [
@@ -21,7 +24,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCqDDNHBHNG96GVEIFwgAuIFD9k4O-h96o",
+      libraries: ["places"]
+    }),
+    AgmDirectionModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
