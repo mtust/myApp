@@ -42,6 +42,7 @@ export class HomePage {
     //create search FormControl
     this.searchControlFrom = new FormControl();
     this.searchControlTo = new FormControl();
+    this.zoom = 30;
 
     this.mapsAPILoader.load().then(() => {
       this.setOriginFromCurrentLocation();
@@ -61,7 +62,7 @@ export class HomePage {
           //set latitude, longitude and zoom
           this.latitudeFrom = place.geometry.location.lat();
           this.longitudeFrom = place.geometry.location.lng();
-          this.zoom = 12;
+          this.zoom = 30;
         });
       });
       let autocompleteTo = new google.maps.places.Autocomplete(this.searchElementRefTo.nativeElement, {
@@ -80,7 +81,7 @@ export class HomePage {
           //set latitude, longitude and zoom
           this.latitudeTo= place.geometry.location.lat();
           this.longitudeTo = place.geometry.location.lng();
-          this.zoom = 12;
+          this.zoom = 30;
         });
       });
     });
@@ -102,6 +103,7 @@ export class HomePage {
       navigator.geolocation.getCurrentPosition( pos => {
         this.longitudeFrom = pos.coords.longitude;
         this.latitudeFrom = pos.coords.latitude;
+        this.getGeoLocation(this.latitudeFrom, this.longitudeFrom);
       });
     }
   }
@@ -109,13 +111,11 @@ export class HomePage {
   public setOriginFromCurrentLocation() {
     this.getCurrentLocation();
     this.origin = { lat: this.latitudeFrom, lng: this.longitudeFrom};
-    this.getGeoLocation(this.latitudeFrom, this.longitudeFrom);
   }
 
 
   public getGeoLocation(lat, lng) {
-    debugger;
-    if (navigator) {
+    if (navigator.geolocation) {
       let geocoder = new google.maps.Geocoder();
       let latlng = new google.maps.LatLng(lat, lng);
       let request = { latLng: latlng };
@@ -126,10 +126,10 @@ export class HomePage {
           let rsltAdrComponent = result.address_components;
           let resultLength = rsltAdrComponent.length;
           if (result != null) {
-            alert(rsltAdrComponent[resultLength-8].short_name);
-            alert(rsltAdrComponent[resultLength-7].short_name);
+            let address =  rsltAdrComponent[resultLength-7].short_name + ", " + rsltAdrComponent[resultLength-8].short_name + ", " + rsltAdrComponent[resultLength-5].short_name;
+            this.searchControlFrom.setValue(address);
           } else {
-            alert("No address available!");
+            console.warn("No address available!");
           }
         }
       });
