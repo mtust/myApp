@@ -13,6 +13,10 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {AgmCoreModule} from '@agm/core';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {AgmDirectionModule} from "agm-direction";
+import {HttpModule} from "@angular/http";
+import {ApiService} from "../services/http/api.service";
+import {JwtService} from "../services/http/jwt.service";
+import {RideService} from "../services/RideService";
 
 @NgModule({
   declarations: [
@@ -24,6 +28,7 @@ import {AgmDirectionModule} from "agm-direction";
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyCqDDNHBHNG96GVEIFwgAuIFD9k4O-h96o",
@@ -42,6 +47,9 @@ import {AgmDirectionModule} from "agm-direction";
     TabsPage
   ],
   providers: [
+    ApiService,
+    JwtService,
+    RideService,
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
