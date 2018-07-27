@@ -18,7 +18,12 @@
                spellcheck="off" type="text" class="form-control" #searchTo [formControl]="searchControlTo">
       </div>
       <div class="row">
-        <button type="button" class="btn btn-default" (click)="findDirection()">Find direction</button>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-default" [disabled]="!(isValidFrom || isValidFrom)" (click)="findDirection()">Find direction</button>
+        </div>
+        <div class=col-md-2>
+          <button type="button" [disabled]="!(isValidFrom || isValidFrom)" class="btn btn-success" (click)="createRide()">Create ride</button>
+        </div>
       </div>
     </div>
     <div style="padding-top: 10px;">

@@ -2,6 +2,8 @@ import {Component, ElementRef, NgZone, ViewChild} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import {FormControl} from "@angular/forms";
 import {MapsAPILoader} from "@agm/core";
+import {Ride} from "../../models/Ride";
+import {RideService} from "../../services/RideService";;
 
 declare var google: any;
 
@@ -18,7 +20,7 @@ export class HomePage {
 
 
   constructor(public navCtrl: NavController, private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone) {
+              private ngZone: NgZone, private rideService: RideService) {
   }
 
   @ViewChild("searchFrom")
@@ -38,7 +40,15 @@ export class HomePage {
   public origin: {};
   public destination: {};
 
+  public isValidFrom: boolean;
+  public isValidTo: boolean;
+
+  public myRide: Ride;
+
+
   ngOnInit() {
+    this.isValidFrom = false;
+    this.isValidTo = false;
     //create search FormControl
     this.searchControlFrom = new FormControl();
     this.searchControlTo = new FormControl();
@@ -62,6 +72,7 @@ export class HomePage {
           //set latitude, longitude and zoom
           this.latitudeFrom = place.geometry.location.lat();
           this.longitudeFrom = place.geometry.location.lng();
+          this.isValidFrom = true;
           this.zoom = 30;
         });
       });
@@ -81,6 +92,7 @@ export class HomePage {
           //set latitude, longitude and zoom
           this.latitudeTo= place.geometry.location.lat();
           this.longitudeTo = place.geometry.location.lng();
+          this.isValidTo = true;
           this.zoom = 30;
         });
       });
@@ -128,12 +140,25 @@ export class HomePage {
           if (result != null) {
             let address =  rsltAdrComponent[resultLength-7].short_name + ", " + rsltAdrComponent[resultLength-8].short_name + ", " + rsltAdrComponent[resultLength-5].short_name;
             this.searchControlFrom.setValue(address);
+            this.isValidFrom = true;
           } else {
             console.warn("No address available!");
           }
         }
       });
     }
+  }
+
+  public createRide() {
+    this.mapsAPILoader.load().then(() => {
+      this.myRide = new Ride();
+      this.myRide.isActive = true;
+      this.myRide.pointFrom = new google.maps.Point(this.longitudeFrom, this.latitudeFrom);
+      this.myRide.pointTo = new google.maps.Point(this.longitudeTo, this.latitudeTo);
+
+      this.rideService.createRide(this.myRide).subscribe(ride => this.myRide = ride);
+    });
+
   }
 
 }
