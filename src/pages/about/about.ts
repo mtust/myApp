@@ -13,10 +13,12 @@ export class AboutPage{
   }
 
   rides: Array<Ride> = [];
+  ride: Ride;
   jsonRides;
 
   findRide() {
-    this.rideService.getRideById("5a32c0979f78370829115b3c").subscribe(rides => {this.rides = rides});
+    this.rideService.getRideById("5b82e7bf57997e07328ee93a").subscribe(ride => {this.ride = ride});
+    debugger;
     this.jsonRides = JSON.stringify(this.rides);
   }
 

@@ -10,14 +10,11 @@
   <button class="btn btn-default" (click)="findRide()">Find ride</button>
   <div>
     <tr *ngFor="let ride of rides">
-      <td>{{ride.date}}</td>
-      <td>{{ride.distanceFrom}}</td>
-      <td>{{ride.distanceTo}}</td>
       <td>{{ride.id}}</td>
+      <td>{{ride.date}}</td>
       <td>{{ride.isActive}}</td>
       <td>{{ride.placeFrom}}</td>
       <td>{{ride.placeTo}}</td>
-      <td>{{ride.pointFro}}</td>
     </tr>
   </div>
   <div>

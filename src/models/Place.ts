@@ -1,12 +1,10 @@
-import {DateTime} from "ionic-angular";
+import Point = google.maps.Point;
 import Geometry = google.maps.Data.Geometry;
 
 export class Place {
 
-  id: string;
-
-  date: DateTime;
   geometry: Geometry;
+  point: Point;
   name: String;
   distance: number;
 }

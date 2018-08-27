@@ -3,7 +3,8 @@ import { NavController } from 'ionic-angular';
 import {FormControl} from "@angular/forms";
 import {MapsAPILoader} from "@agm/core";
 import {Ride} from "../../models/Ride";
-import {RideService} from "../../services/RideService";;
+import {RideService} from "../../services/RideService";
+import {Place} from "../../models/Place";
 
 declare var google: any;
 
@@ -153,9 +154,10 @@ export class HomePage {
     this.mapsAPILoader.load().then(() => {
       this.myRide = new Ride();
       this.myRide.isActive = true;
-      this.myRide.pointFrom = new google.maps.Point(this.longitudeFrom, this.latitudeFrom);
-      this.myRide.pointTo = new google.maps.Point(this.longitudeTo, this.latitudeTo);
-
+      this.myRide.placeFrom = new Place();
+      this.myRide.placeFrom.point = new google.maps.Point(this.longitudeFrom, this.latitudeFrom);
+      this.myRide.placeTo = new Place();
+      this.myRide.placeTo.point = new google.maps.Point(this.longitudeTo, this.latitudeTo);
       this.rideService.createRide(this.myRide).subscribe(ride => this.myRide = ride);
     });
 
