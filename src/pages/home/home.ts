@@ -71,6 +71,7 @@ export class HomePage {
           }
 
           //set latitude, longitude and zoom
+          debugger;
           this.latitudeFrom = place.geometry.location.lat();
           this.longitudeFrom = place.geometry.location.lng();
           this.isValidFrom = true;
@@ -131,8 +132,7 @@ export class HomePage {
     if (navigator.geolocation) {
       let geocoder = new google.maps.Geocoder();
       let latlng = new google.maps.LatLng(lat, lng);
-      let request = { latLng: latlng };
-
+      let request = { latLng: latlng};
       geocoder.geocode(request, (results, status) => {
         if (status == google.maps.GeocoderStatus.OK) {
           let result = results[0];
@@ -158,6 +158,8 @@ export class HomePage {
       this.myRide.placeFrom.point = new google.maps.Point(this.longitudeFrom, this.latitudeFrom);
       this.myRide.placeTo = new Place();
       this.myRide.placeTo.point = new google.maps.Point(this.longitudeTo, this.latitudeTo);
+      this.myRide.placeFrom.name = this.searchControlFrom.value;
+      this.myRide.placeTo.name = this.searchControlTo.value;
       this.rideService.createRide(this.myRide).subscribe(ride => this.myRide = ride);
     });
 
