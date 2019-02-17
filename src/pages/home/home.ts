@@ -137,9 +137,12 @@ export class HomePage {
         if (status == google.maps.GeocoderStatus.OK) {
           let result = results[0];
           let rsltAdrComponent = result.address_components;
-          let resultLength = rsltAdrComponent.length;
           if (result != null) {
-            let address =  rsltAdrComponent[resultLength-7].short_name + ", " + rsltAdrComponent[resultLength-8].short_name + ", " + rsltAdrComponent[resultLength-5].short_name;
+            let address = "";
+            for (var i = 0; i < rsltAdrComponent.length && i < 4; i++) {
+              address += rsltAdrComponent[i].short_name + ", ";
+            }
+            address = address.substring(0, address.length - 2);
             this.searchControlFrom.setValue(address);
             this.isValidFrom = true;
           } else {
