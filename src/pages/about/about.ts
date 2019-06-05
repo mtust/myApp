@@ -17,7 +17,7 @@ export class AboutPage{
   jsonRides;
 
   findRide() {
-    this.rideService.getRideById("5b82e7bf57997e07328ee93a").subscribe(ride => {this.ride = ride});
+    this.rideService.getRideById("5cf63f3875ad8209e2a01b3c").subscribe(ride => {this.rides.push(ride)});
     debugger;
     this.jsonRides = JSON.stringify(this.rides);
   }
